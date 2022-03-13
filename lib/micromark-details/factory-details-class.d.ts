@@ -1,2 +1,2 @@
-import { Tokenizer } from 'micromark-util-types';
+import type { Tokenizer } from 'micromark-util-types';
 export declare const factoryDetailsClass: Tokenizer;
