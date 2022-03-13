@@ -18,6 +18,7 @@
         "build": "tsc",
         "test": "npm run build && cd test && tsc && ava",
         "lint": "eslint .",
+        "format": "eslint . --fix",
         "release": "npm run build && zx scripts/release.mjs",
         "prepublishOnly": "npm run build"
     },
