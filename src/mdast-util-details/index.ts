@@ -18,6 +18,7 @@ export const fromMarkdownDetails: Extension = {
       this.setData('detailsAttributes', [])
       enter.call(this, 'detailsContainer', token, 'details')
     },
+
     detailsContainerSummary(token) {
       // pushin all the attributes for <details> tag before entering
       // <summary> tag
@@ -25,30 +26,37 @@ export const fromMarkdownDetails: Extension = {
       const cleaned: { open: boolean; class?: string } = {
         open: false,
       }
+
       const classes: string[] = []
+
       for (const attribute of attributes) {
         if (attribute[0] === 'class')
           classes.push(attribute[1])
         else
           cleaned.open = attribute[1]
       }
+
       if (classes.length > 0) cleaned.class = classes.join(' ')
       this.setData('detailsAttributes');
       (this.stack[this.stack.length - 1] as any).attributes = cleaned
       enter.call(this, 'detailsContainerSummary', token, 'summary')
     },
   },
+
   exit: {
     detailsContainer(token) {
       this.exit(token)
     },
+
     detailsContainerSummary(token) {
       this.exit(token)
     },
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     detailsExpanded(token) {
       getDetailsAttributes(this).push(['open', true])
     },
+
     detailsContainerClassName(token) {
       getDetailsAttributes(this).push(
         ['class', this.sliceSerialize(token)])
