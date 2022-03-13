@@ -15,11 +15,19 @@ interface TestCase {
   processor: (input: string) => string
 }
 
+function getTestCaseData(data: string | VFile): string {
+  if (typeof (data) == 'string')
+    return data
+
+  return FileSystem.readFileSync(data.path).toString()
+}
+
 const testCase = <TestCase> function(config: TestCaseConfig, processor?: (input: string) => string) {
-  const input = typeof (config.input) == 'string' ? config.input : FileSystem.readFileSync(config.input.path).toString()
-  const expected = typeof (config.expected) == 'string' ? config.expected : FileSystem.readFileSync(config.expected.path).toString()
+  const input = getTestCaseData(config.input)
+  const expected = getTestCaseData(config.expected)
   const process = processor ?? testCase.processor
   const name = `Test Case ${++testCase.count}${config.name ? `: ${config.name}` : ''}`
+
   test(name, (ava) => {
     const actual = process(input)
     ava.is(actual.trim(), expected.trim(), config.message)
