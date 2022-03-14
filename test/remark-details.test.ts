@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
 import type { Element, Node, Root } from 'hast'
 import type { Plugin, Transformer } from 'unified'
 import { unified } from 'unified'
@@ -6,8 +8,12 @@ import remarkParse from 'remark-parse'
 import remark2rehype from 'remark-rehype'
 import { visit } from 'unist-util-visit'
 import { h } from 'hastscript'
+import path from 'node:path'
 import remarkDetails from '../lib/index.js'
 import testCase, { fromPath } from './test-case.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const htmlDetails: Plugin<[], Root, Root> = function(): Transformer<Root> {
   return (tree: Root) => {
@@ -142,8 +148,8 @@ testCase({
 
 for (let i = 8; i <= 15; ++i) {
   testCase({
-    input: fromPath(`test/input/${i}.md`),
-    expected: fromPath(`test/expected/${i}.md`),
+    input: fromPath(path.join(__dirname, '..', `test/input/${i}.md`)),
+    expected: fromPath(path.join(__dirname, '..', `test/expected/${i}.md`)),
     message: 'details with many codes',
   })
 }
