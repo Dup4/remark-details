@@ -95,7 +95,7 @@ packages:
     dependencies:
       '@antfu/eslint-config-ts': 0.18.8_eslint@8.8.0+typescript@4.6.2
       eslint: 8.8.0
-      eslint-plugin-react: 7.29.3_eslint@8.8.0
+      eslint-plugin-react: 7.29.4_eslint@8.8.0
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -1340,7 +1340,7 @@ packages:
       minimatch: 3.1.2
       object.values: 1.1.5
       resolve: 1.22.0
-      tsconfig-paths: 3.13.0
+      tsconfig-paths: 3.14.0
     dev: true
 
   /eslint-plugin-jsonc/2.2.1_eslint@8.8.0:
@@ -1393,8 +1393,8 @@ packages:
       eslint: 8.8.0
     dev: true
 
-  /eslint-plugin-react/7.29.3_eslint@8.8.0:
-    resolution: {integrity: sha512-MzW6TuCnDOcta67CkpDyRfRsEVx9FNMDV8wZsDqe1luHPdGTrQIUaUXD27Ja3gHsdOIs/cXzNchWGlqm+qRVRg==}
+  /eslint-plugin-react/7.29.4_eslint@8.8.0:
+    resolution: {integrity: sha512-CVCXajliVh509PcZYRFyu/BoUEz452+jtQJq2b3Bae4v3xBUWPLCmtmBM+ZinG4MzwmxJgJ2M5rMqhqLVn7MtQ==}
     engines: {node: '>=4'}
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
@@ -3644,8 +3644,8 @@ packages:
       yn: 3.1.1
     dev: true
 
-  /tsconfig-paths/3.13.0:
-    resolution: {integrity: sha512-nWuffZppoaYK0vQ1SQmkSsQzJoHA4s6uzdb2waRpD806x9yfq153AdVsWz4je2qZcW+pENrMQXbGQ3sMCkXuhw==}
+  /tsconfig-paths/3.14.0:
+    resolution: {integrity: sha512-cg/1jAZoL57R39+wiw4u/SCC6Ic9Q5NqjBOb+9xISedOYurfog9ZNmKJSxAnb2m/5Bq4lE9lhUcau33Ml8DM0g==}
     dependencies:
       '@types/json5': 0.0.29
       json5: 1.0.1
