@@ -148,7 +148,7 @@ testCase({
 for (let i = 8; i <= 15; ++i) {
   testCase({
     input: fromPath(path.join(__dirname, '..', `test/input/${i}.md`)),
-    expected: fromPath(path.join(__dirname, '..', `test/expected/${i}.md`)),
+    expected: fromPath(path.join(__dirname, '..', `test/expected/${i}.html`)),
     message: 'details with many codes',
   })
 }
