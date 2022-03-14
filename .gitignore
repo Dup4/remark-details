@@ -1,8 +1,6 @@
 # Build results
-*.js
-!/lib/**/*.js
-*.d.ts
-!/lib/**/*.d.ts
+/lib
+/test_dist
 
 # Source maps
 *.map
