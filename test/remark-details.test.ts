@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
+import FileSystem from 'fs'
 import type { Element, Node, Root } from 'hast'
 import type { Plugin, Transformer } from 'unified'
 import { unified } from 'unified'
@@ -145,10 +146,13 @@ testCase({
   message: '',
 })
 
-for (let i = 8; i <= 15; ++i) {
+for (let i = 1; i <= 15; ++i) {
+  const inputFilePath = path.join(__dirname, '..', `test/input/${i}.md`)
+  const expectedFilePath = path.join(__dirname, '..', `test/expected/${i}.html`)
+
   testCase({
-    input: fromPath(path.join(__dirname, '..', `test/input/${i}.md`)),
-    expected: fromPath(path.join(__dirname, '..', `test/expected/${i}.html`)),
+    input: fromPath(inputFilePath),
+    expected: FileSystem.existsSync(expectedFilePath) ? fromPath(expectedFilePath) : '',
     message: 'details with many codes',
   })
 }
