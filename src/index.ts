@@ -21,12 +21,14 @@ let warningIssued = false
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const remarkDetails: Plugin = function(options) {
   const data = this.data() as Record<string, unknown[] | undefined>
+
   // warning for old remarks
   if (
     !warningIssued
     && (
       this.Parser?.prototype?.blockTokenizers
-    || this.Compiler?.prototype?.visitors)
+      || this.Compiler?.prototype?.visitors
+    )
   ) {
     warningIssued = true
     console.warn(
@@ -43,12 +45,6 @@ const remarkDetails: Plugin = function(options) {
   add('micromarkExtensions', syntax)
   add('fromMarkdownExtensions', fromMarkdownDetails)
 
-  return transform
-
-  function transform(tree) {
-    visit(tree, ['detailsContainer', 'detailsContainerSummary'], ondetails)
-  }
-
   function ondetails(node: DetailsNode) {
     const data = node.data || (node.data = {})
     const hast = h(node.name, node.attributes)
@@ -56,5 +52,12 @@ const remarkDetails: Plugin = function(options) {
     data.hName = hast.tagName
     data.hProperties = hast.properties
   }
+
+  function transform(tree) {
+    visit(tree, ['detailsContainer', 'detailsContainerSummary'], ondetails)
+  }
+
+  return transform
 }
+
 export default remarkDetails
