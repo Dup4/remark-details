@@ -1,6 +1,6 @@
-import FileSystem from 'fs'
 import test from 'ava'
-import { VFile } from 'vfile'
+import type { VFile } from 'vfile'
+import { readSync } from 'to-vfile'
 
 interface TestCaseConfig {
   name?: string
@@ -19,7 +19,7 @@ function getTestCaseData(data: string | VFile): string {
   if (typeof (data) == 'string')
     return data
 
-  return FileSystem.readFileSync(data.path).toString()
+  return data.value.toString()
 }
 
 const testCase = <TestCase> function(config: TestCaseConfig, processor?: (input: string) => string) {
@@ -40,7 +40,5 @@ testCase.processor = input => input
 export default testCase
 
 export function fromPath(path: string): VFile {
-  const result = new VFile()
-  result.path = path
-  return result
+  return readSync(path)
 }
