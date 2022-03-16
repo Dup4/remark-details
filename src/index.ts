@@ -1,6 +1,4 @@
 import type { Node } from 'hast'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Root } from 'hast'
 import { h } from 'hastscript'
 import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
@@ -19,7 +17,7 @@ interface DetailsNode extends Node {
 let warningIssued = false
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const remarkDetails: Plugin = function(options) {
+const remarkDetails: Plugin = function(options = {}) {
   const data = this.data() as Record<string, unknown[] | undefined>
 
   // warning for old remarks
