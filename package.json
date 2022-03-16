@@ -15,8 +15,8 @@
     },
     "main": "lib/index.js",
     "scripts": {
-        "build": "tsc",
-        "test": "npm run build && cd test && tsc && ava",
+        "build": "rimraf lib && tsc",
+        "test": "npm run build && rimraf test_dist && cd test && tsc && ava",
         "lint": "eslint .",
         "format": "eslint . --fix",
         "release": "npm run build && zx scripts/release.mjs",
@@ -44,6 +44,7 @@
         "micromark-util-character": "^1.1.0",
         "micromark-util-symbol": "^1.0.1",
         "micromark-util-types": "^1.0.2",
+        "rimraf": "^3.0.2",
         "unified": "^10.1.2",
         "unist-util-visit": "^4.1.0"
     },
