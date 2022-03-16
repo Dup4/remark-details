@@ -37,6 +37,7 @@ export const fromMarkdownDetails: Extension = {
       }
 
       if (classes.length > 0) cleaned.class = classes.join(' ')
+
       this.setData('detailsAttributes');
       (this.stack[this.stack.length - 1] as any).attributes = cleaned
       enter.call(this, 'detailsContainerSummary', token, 'summary')
