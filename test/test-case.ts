@@ -25,6 +25,7 @@ type ProcessorType = (input: string) => string
 interface ITestCase {
   (config: TestCaseConfig, mode: TestMode, processor?: ProcessorType): void
   count: number
+  namePrefix: string
   processor: ProcessorType
 }
 
@@ -93,6 +94,7 @@ const TestCase = <ITestCase> function(config: TestCaseConfig, mode: TestMode, pr
   const markdown = getTestCaseData(config.markdown)
   const process = processor ?? TestCase.processor
   const name = config.name ?? `Test Case ${++TestCase.count}${config.name ? `: ${config.name}` : ''}`
+  const outputDataPath = `${TestCase.namePrefix}-${name.replace(/ /g, '')}`
 
   test(name, (ava) => {
     let input = ''
@@ -111,7 +113,7 @@ const TestCase = <ITestCase> function(config: TestCaseConfig, mode: TestMode, pr
 
     const file = new VFile()
     file.value = actual
-    file.path = TestData.GetActualOutputPath(name)
+    file.path = TestData.GetActualOutputPath(outputDataPath)
     writeSync(file)
 
     ava.is(actual.trim(), expected.trim(), config.message)
@@ -119,6 +121,7 @@ const TestCase = <ITestCase> function(config: TestCaseConfig, mode: TestMode, pr
 }
 
 TestCase.count = 0
+TestCase.namePrefix = ''
 TestCase.processor = input => input
 
 const TestCaseFromMarkdown = function(config: TestCaseConfig, processor?: ProcessorType) {

@@ -1,6 +1,13 @@
+import { fileURLToPath } from 'url'
+import { basename } from 'path'
 import { micromark } from 'micromark'
 import { detailsHtml as html, syntax } from '../lib/micromark-details/index.js'
 import TestCase, { TestCaseFromMarkdown } from './test-case.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __basename = basename(__filename)
+
+TestCase.namePrefix = __basename.replace(/\./g, '-')
 
 TestCase.processor = (input: string) => {
   return micromark(input, {
