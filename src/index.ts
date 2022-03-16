@@ -1,6 +1,6 @@
-import type { Node } from 'hast'
+import type { Element, Node, Root } from 'hast'
 import { h } from 'hastscript'
-import type { Plugin } from 'unified'
+import type { Plugin, Transformer } from 'unified'
 import { visit } from 'unist-util-visit'
 
 import { fromMarkdownDetails } from './mdast-util-details/index.js'
@@ -17,7 +17,7 @@ interface DetailsNode extends Node {
 let warningIssued = false
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const remarkDetails: Plugin = function(options = {}) {
+const remarkDetails: Plugin<[], Root, Root> = function(options = {}): Transformer<Root> {
   const data = this.data() as Record<string, unknown[] | undefined>
 
   // warning for old remarks
@@ -43,15 +43,15 @@ const remarkDetails: Plugin = function(options = {}) {
   add('micromarkExtensions', syntax)
   add('fromMarkdownExtensions', fromMarkdownDetails)
 
-  function ondetails(node: DetailsNode) {
+  function ondetails(node: DetailsNode | any) {
     const data = node.data || (node.data = {})
-    const hast = h(node.name, node.attributes)
+    const hast = h(node.name, node.attributes) as unknown as Element
 
     data.hName = hast.tagName
     data.hProperties = hast.properties
   }
 
-  function transform(tree) {
+  function transform(tree: Root) {
     visit(tree, ['detailsContainer', 'detailsContainerSummary'], ondetails)
   }
 

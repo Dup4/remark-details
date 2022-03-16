@@ -1,38 +1,20 @@
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
 import FileSystem from 'fs'
-import type { Element, Node, Root } from 'hast'
-import type { Plugin, Transformer } from 'unified'
 import { unified } from 'unified'
 import rehypeStringify from 'rehype-stringify'
 import remarkParse from 'remark-parse'
 import remark2rehype from 'remark-rehype'
-import { visit } from 'unist-util-visit'
-import { h } from 'hastscript'
 import remarkDetails from '../lib/index.js'
 import testCase, { fromPath } from './test-case.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const htmlDetails: Plugin<[], Root, Root> = function(): Transformer<Root> {
-  return (tree: Root) => {
-    visit(tree, ['detailsContainer', 'detailsContainerSummary'], (node: Node | any) => {
-      const data = node.data || (node.data = {})
-      const hast = h(node.name, node.attributes) as unknown as Element
-      data.hName = hast.tagName
-      data.hProperties = hast.properties
-    })
-  }
-}
-
-testCase.processor = (input) => {
+testCase.processor = (input: string) => {
   return unified()
     .use(remarkParse)
-  // the main plugin written, based on micromark
     .use(remarkDetails)
-  // the function above, transform details related tags to html-compilable
-    .use(htmlDetails)
     .use(remark2rehype)
     .use(rehypeStringify)
     .processSync(input).value as string
