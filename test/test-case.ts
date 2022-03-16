@@ -2,8 +2,8 @@ import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
 import FileSystem from 'fs'
 import test from 'ava'
-import type { VFile } from 'vfile'
-import { readSync } from 'to-vfile'
+import { VFile } from 'vfile'
+import { readSync, writeSync } from 'to-vfile'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -30,6 +30,7 @@ interface ITestCase {
 
 class TestData {
   private static dataPath = path.join(__dirname, '..', 'test', 'data')
+  private static actualOutputPath = path.join(__dirname, '..', 'test_output')
 
   private static getDataPath(idx: number): string {
     return path.join(this.dataPath, String(idx))
@@ -49,6 +50,10 @@ class TestData {
 
   private static fromPathIfExists(path: string): string {
     return FileSystem.existsSync(path) ? readSync(path).toString() : ''
+  }
+
+  public static GetActualOutputPath(name: string): string {
+    return path.join(this.actualOutputPath, `${name}`)
   }
 
   public static GetMarkdown(idx: number): string {
@@ -103,6 +108,12 @@ const TestCase = <ITestCase> function(config: TestCaseConfig, mode: TestMode, pr
     }
 
     const actual = process(input)
+
+    const file = new VFile()
+    file.value = actual
+    file.path = TestData.GetActualOutputPath(name)
+    writeSync(file)
+
     ava.is(actual.trim(), expected.trim(), config.message)
   })
 }

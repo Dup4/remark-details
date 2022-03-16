@@ -1,6 +1,7 @@
 # Build results
 /lib
 /test_dist
+test_output/
 
 # Source maps
 *.map
