@@ -3,6 +3,7 @@
         "target": "es2020",
         "module": "es2020",
         "sourceMap": true,
+        "declaration": true,
         "strict": true,
         "noImplicitAny": false,
         "moduleResolution": "node",

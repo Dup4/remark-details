@@ -31,16 +31,20 @@ interface ITestCase {
 class TestData {
   private static dataPath = path.join(__dirname, '..', 'test', 'data')
 
+  private static getDataPath(idx: number): string {
+    return path.join(this.dataPath, String(idx))
+  }
+
   private static getMarkdownFilePath(idx: number): string {
-    return path.join(this.dataPath, 'markdown', `${idx}.md`)
+    return path.join(this.getDataPath(idx), 'markdown.md')
   }
 
   private static getHTMLFilePath(idx: number): string {
-    return path.join(this.dataPath, 'html', `${idx}.html`)
+    return path.join(this.getDataPath(idx), 'html.html')
   }
 
   private static getMessageFilePath(idx: number): string {
-    return path.join(this.dataPath, 'message', `${idx}.md`)
+    return path.join(this.getDataPath(idx), 'message.md')
   }
 
   private static fromPathIfExists(path: string): string {
