@@ -1,4 +1,3 @@
-
 import { fileURLToPath } from 'url'
 import { basename } from 'path'
 import { unified } from 'unified'
