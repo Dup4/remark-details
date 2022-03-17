@@ -36,8 +36,10 @@ const remarkDetails: Plugin<[], Root, Root> = function(options = {}): Transforme
 
   function add(field: string, value: unknown) {
     /* istanbul ignore if - other extensions. */
-    if (data[field]) data[field]!.push(value)
-    else data[field] = [value]
+    if (data[field])
+      data[field]!.push(value)
+    else
+      data[field] = [value]
   }
 
   add('micromarkExtensions', syntax)
