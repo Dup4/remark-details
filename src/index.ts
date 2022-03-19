@@ -3,7 +3,7 @@ import { h } from 'hastscript'
 import type { Plugin, Transformer } from 'unified'
 import { visit } from 'unist-util-visit'
 
-import { fromMarkdownDetails } from './mdast-util-details/index.js'
+import { DetailsFromMarkdown, DetailsToMarkdown } from './mdast-util-details/index.js'
 import { syntax } from './micromark-details/index.js'
 
 interface DetailsNode extends Node {
@@ -43,7 +43,8 @@ const remarkDetails: Plugin<[], Root, Root> = function(options = {}): Transforme
   }
 
   add('micromarkExtensions', syntax)
-  add('fromMarkdownExtensions', fromMarkdownDetails)
+  add('fromMarkdownExtensions', DetailsFromMarkdown)
+  add('toMarkdownExtensions', DetailsToMarkdown)
 
   function ondetails(node: DetailsNode | any) {
     const data = node.data || (node.data = {})

@@ -12,7 +12,7 @@ function getDetailsAttributes(ctx: CompileContext) {
     ['open', boolean] | ['class', string])[]
 }
 
-export const fromMarkdownDetails: Extension = {
+export const DetailsFromMarkdown: Extension = {
   enter: {
     detailsContainer(token) {
       this.setData('detailsAttributes', [])
@@ -36,7 +36,8 @@ export const fromMarkdownDetails: Extension = {
           cleaned.open = attribute[1]
       }
 
-      if (classes.length > 0) cleaned.class = classes.join(' ')
+      if (classes.length > 0)
+        cleaned.class = classes.join(' ')
 
       this.setData('detailsAttributes');
       (this.stack[this.stack.length - 1] as any).attributes = cleaned
@@ -65,6 +66,11 @@ export const fromMarkdownDetails: Extension = {
   },
 }
 
-export const detailsToMarkdown = {
+export const DetailsToMarkdown = {
   // TODO well if you want :sweat_smile:
+  unsafe: [],
+  handlers: {
+    detailsContainer: () => 'dddd',
+    detailsContainerSummary: () => 'aaaa',
+  },
 }

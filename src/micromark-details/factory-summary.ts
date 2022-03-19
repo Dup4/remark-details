@@ -18,6 +18,7 @@ export function factorySummary(
     effects.exit(type)
     return ok(code)
   }
+
   return (code) => {
     if (!markdownLineEnding(code)) {
       effects.enter(type)

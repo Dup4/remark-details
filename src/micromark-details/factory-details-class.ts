@@ -5,6 +5,7 @@ import type { State, Tokenizer } from 'micromark-util-types'
 export const factoryDetailsClass: Tokenizer = function(effects, ok, nok) {
   let detailsClass: 'note' | 'warning' | 'question'
   let num = 0
+
   const className: State = function(code) {
     if (num === detailsClass.length) {
       if (markdownSpace(code)) {
@@ -15,11 +16,14 @@ export const factoryDetailsClass: Tokenizer = function(effects, ok, nok) {
         return nok(code)
       }
     }
+
     if (detailsClass[num++] !== String.fromCharCode(code as number))
       return nok(code)
+
     effects.consume(code)
     return className
   }
+
   return (code) => {
     switch (code) {
       case codes.lowercaseN:
@@ -34,6 +38,7 @@ export const factoryDetailsClass: Tokenizer = function(effects, ok, nok) {
       default:
         return nok(code)
     }
+
     effects.enter('detailsContainerClassName')
     return className
   }

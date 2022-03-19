@@ -11,6 +11,7 @@ export function factoryExactSpace(
   number: number,
 ): State {
   let size = 0
+
   const prefix: State = function(code) {
     if (size === number) {
       effects.exit(type)
@@ -23,6 +24,7 @@ export function factoryExactSpace(
     effects.exit(type)
     return nok(code)
   }
+
   return (code) => {
     if (markdownSpace(code)) {
       effects.enter(type)
