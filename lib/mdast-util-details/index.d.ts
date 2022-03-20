@@ -3,7 +3,7 @@ export declare const DetailsFromMarkdown: Extension;
 export declare const DetailsToMarkdown: {
     unsafe: never[];
     handlers: {
-        detailsContainer: () => string;
-        detailsContainerSummary: () => string;
+        detailsContainer: (token: any) => string;
+        detailsContainerSummary: (token: any) => string;
     };
 };

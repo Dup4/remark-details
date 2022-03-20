@@ -56,6 +56,10 @@ const remarkDetails: Plugin<[], Root, Root> = function (
 
     data.hName = hast.tagName;
     data.hProperties = hast.properties;
+
+    if (data.hProperties.hasOwnProperty("symbol")) {
+      delete data.hProperties.symbol;
+    }
   }
 
   function transform(tree: Root) {

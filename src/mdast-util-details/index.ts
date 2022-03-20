@@ -16,6 +16,7 @@ function getDetailsAttributes(ctx: CompileContext) {
   return ctx.getData("detailsAttributes") as (
     | ["open", boolean]
     | ["class", string]
+    | ["symbol", string]
   )[];
 }
 
@@ -30,16 +31,23 @@ export const DetailsFromMarkdown: Extension = {
       // pushin all the attributes for <details> tag before entering
       // <summary> tag
       const attributes = getDetailsAttributes(this);
-      const cleaned: { open: boolean; class?: string } = {
+      const cleaned: { open: boolean; symbol: string; class?: string } = {
+        symbol: "???",
         open: false,
       };
 
       const classes: string[] = [];
 
       for (const attribute of attributes) {
+        if (attribute[0] === "symbol") {
+          cleaned.symbol = attribute[1];
+        }
+
         if (attribute[0] === "class") {
           classes.push(attribute[1]);
-        } else if (attribute[0] == "open") {
+        }
+
+        if (attribute[0] === "open") {
           cleaned.open = attribute[1];
         }
       }
@@ -48,7 +56,7 @@ export const DetailsFromMarkdown: Extension = {
         cleaned.class = classes.join(" ");
       }
 
-      this.setData("detailsAttributes");
+      // this.setData("detailsAttributes");
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (this.stack[this.stack.length - 1] as any).attributes = cleaned;
@@ -73,6 +81,10 @@ export const DetailsFromMarkdown: Extension = {
     detailsContainerClassName(token) {
       getDetailsAttributes(this).push(["class", this.sliceSerialize(token)]);
     },
+
+    detailsContainerSequence(token) {
+      getDetailsAttributes(this).push(["symbol", this.sliceSerialize(token)]);
+    },
   },
 };
 
@@ -80,7 +92,13 @@ export const DetailsToMarkdown = {
   // TODO well if you want :sweat_smile:
   unsafe: [],
   handlers: {
-    detailsContainer: () => "",
-    detailsContainerSummary: () => "",
+    detailsContainer: (token) => {
+      console.log(token);
+      return "";
+    },
+    detailsContainerSummary: (token) => {
+      console.log(token);
+      return "";
+    },
   },
 };
