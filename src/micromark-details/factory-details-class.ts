@@ -1,44 +1,83 @@
 import { markdownSpace } from "micromark-util-character";
-import { codes } from "micromark-util-symbol/codes.js";
 import type { State, Tokenizer } from "micromark-util-types";
 
-export const factoryDetailsClass: Tokenizer = function (effects, ok, nok) {
-  let detailsClass: "note" | "warning" | "question";
-  let num = 0;
+const detailsClassList = [
+  "note",
+  "abstract",
+  "summary",
+  "tldr",
+  "info",
+  "todo",
+  "tip",
+  "hint",
+  "important",
+  "success",
+  "check",
+  "done",
+  "question",
+  "help",
+  "faq",
+  "warning",
+  "caution",
+  "attention",
+  "failure",
+  "fail",
+  "missing",
+  "danger",
+  "error",
+  "bug",
+  "example",
+  "quote",
+  "cite",
+];
 
-  const className: State = function (code) {
-    if (num === detailsClass.length) {
+const detailsClassNums = detailsClassList.length;
+
+export const factoryDetailsClass: Tokenizer = function (effects, ok, nok) {
+  const findIx = Array(detailsClassList.length).fill(0);
+  let preCompleteMatch = false;
+
+  const findClassName: State = function (code) {
+    if (preCompleteMatch) {
       if (markdownSpace(code)) {
         effects.exit("detailsContainerClassName");
         return ok(code);
-      } else {
-        return nok(code);
       }
     }
 
-    if (detailsClass[num++] !== String.fromCharCode(code as number))
-      return nok(code);
+    preCompleteMatch = false;
 
-    effects.consume(code);
-    return className;
-  };
+    let okCnt = 0;
+    for (let i = 0; i < detailsClassNums; i++) {
+      const len = detailsClassList[i].length;
+      if (findIx[i] < 0 || findIx[i] >= len) {
+        continue;
+      }
 
-  return (code) => {
-    switch (code) {
-      case codes.lowercaseN:
-        detailsClass = "note";
-        break;
-      case codes.lowercaseW:
-        detailsClass = "warning";
-        break;
-      case codes.lowercaseQ:
-        detailsClass = "question";
-        break;
-      default:
-        return nok(code);
+      if (
+        detailsClassList[i][findIx[i]] === String.fromCharCode(code as number)
+      ) {
+        ++okCnt;
+        ++findIx[i];
+        if (findIx[i] == len) {
+          preCompleteMatch = true;
+        }
+      } else {
+        findIx[i] = -1;
+      }
     }
 
+    if (okCnt == 0) {
+      return nok(code);
+    }
+
+    effects.consume(code);
+    return findClassName;
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  return (code) => {
     effects.enter("detailsContainerClassName");
-    return className;
+    return findClassName;
   };
 };

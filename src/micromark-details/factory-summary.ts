@@ -26,6 +26,7 @@ export function factorySummary(
       effects.enter(types.chunkText, {
         contentType: constants.contentTypeText,
       });
+
       effects.consume(code);
 
       return summary;

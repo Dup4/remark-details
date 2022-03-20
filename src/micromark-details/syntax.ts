@@ -35,16 +35,21 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
   };
 
   const afterSummary: State = function (code) {
-    if (code === codes.eof) return afterOpening(code);
+    if (code === codes.eof) {
+      return afterOpening(code);
+    }
+
     if (markdownLineEnding(code)) {
       // return effects.attempt(nonLazyLine, contentStart,
       // afterOpening)(code);
       effects.enter(types.lineEnding);
       effects.consume(code);
       effects.exit(types.lineEnding);
+
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return contentStart;
     }
+
     return nok(code);
   };
 
@@ -56,6 +61,7 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
     } else if (code !== codes.space) {
       return nok(code);
     }
+
     effects.exit("detailsContainerFence");
 
     // first get space, than try if there is class name
@@ -95,7 +101,11 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
       sizeOpen++;
       return open2;
     }
-    if (sizeOpen < constants.codeFencedSequenceSizeMin) return nok(code);
+
+    if (sizeOpen < constants.codeFencedSequenceSizeMin) {
+      return nok(code);
+    }
+
     effects.exit("detailsContainerSequence");
     return isExpanded;
   };
@@ -104,6 +114,7 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
     effects.enter("detailsContainer");
     effects.enter("detailsContainerFence");
     effects.enter("detailsContainerSequence");
+
     if (code === codes.questionMark) {
       openingMark = codes.questionMark;
       return open2(code);
@@ -116,8 +127,14 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
   };
 
   const lineStart: State = function (code) {
-    if (code === codes.eof) return after(code);
-    if (!markdownSpace(code)) return after;
+    if (code === codes.eof) {
+      return after(code);
+    }
+
+    if (!markdownSpace(code)) {
+      return after;
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     return factoryExactSpace(effects, chunkStart, nok, types.linePrefix, 4);
   };
@@ -127,20 +144,25 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
       effects.exit("detailsContainer");
       return ok(code);
     }
+
     effects.enter("detailsContainerContent");
     return lineStart(code);
   };
 
   // FIXME: change name for this func
   const nonLazyLineAfter: State = function (code) {
-    effects.consume(code); // consume line ending
+    // consume line ending
+    effects.consume(code);
     effects.exit(types.chunkDocument);
+
     // self.parser.lazy[token.start.line] = false;
     return lineStart;
   };
 
   const chunkStart: State = function (code) {
-    if (code === codes.eof) return after(code);
+    if (code === codes.eof) {
+      return after(code);
+    }
 
     const contentContinue: State = function (code) {
       if (code === codes.eof) {
@@ -164,7 +186,9 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
       previous,
     });
 
-    if (previous) previous.next = token;
+    if (previous) {
+      previous.next = token;
+    }
 
     previous = token;
     return contentContinue;
@@ -174,7 +198,6 @@ const tokenizeDetailsContainer: Tokenizer = function (effects, ok, nok) {
 };
 
 const tokenizeDetailsClass: Tokenizer = factoryDetailsClass;
-
 const detailsClass = {
   tokenize: tokenizeDetailsClass,
 };

@@ -2,7 +2,6 @@ import type { Element, Node, Root } from "hast";
 import { h } from "hastscript";
 import type { Plugin, Transformer } from "unified";
 import { visit } from "unist-util-visit";
-
 import {
   DetailsFromMarkdown,
   DetailsToMarkdown,

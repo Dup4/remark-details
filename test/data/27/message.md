@@ -1,0 +1,1 @@
+details with question class

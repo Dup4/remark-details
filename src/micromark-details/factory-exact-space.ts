@@ -17,10 +17,12 @@ export function factoryExactSpace(
       effects.exit(type);
       return ok(code);
     }
+
     if (markdownSpace(code) && ++size <= number) {
       effects.consume(code);
       return prefix;
     }
+
     effects.exit(type);
     return nok(code);
   };
