@@ -15,16 +15,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Setup
-        run: npm i -g pnpm @antfu/ni
+          cache: 'pnpm'
 
       - name: Install
-        run: nci
+        run: pnpm i
 
       - name: Test
-        run: nr test --if-present
+        run: pnpm test --if-present
