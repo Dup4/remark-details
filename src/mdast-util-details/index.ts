@@ -39,7 +39,7 @@ export const DetailsFromMarkdown: Extension = {
       for (const attribute of attributes) {
         if (attribute[0] === "class") {
           classes.push(attribute[1]);
-        } else {
+        } else if (attribute[0] == "open") {
           cleaned.open = attribute[1];
         }
       }
@@ -49,6 +49,7 @@ export const DetailsFromMarkdown: Extension = {
       }
 
       this.setData("detailsAttributes");
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (this.stack[this.stack.length - 1] as any).attributes = cleaned;
       enter.call(this, "detailsContainerSummary", token, "summary");
