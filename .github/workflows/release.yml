@@ -13,13 +13,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
 
-      - run: npm i -g pnpm @antfu/ni
-      - run: nci
-      - run: nr test --if-present
+      - run: pnpm i
+      - run: pnpm test --if-present
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
