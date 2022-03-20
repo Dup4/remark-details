@@ -44,7 +44,9 @@ export const DetailsFromMarkdown: Extension = {
         }
       }
 
-      if (classes.length > 0) cleaned.class = classes.join(" ");
+      if (classes.length > 0) {
+        cleaned.class = classes.join(" ");
+      }
 
       this.setData("detailsAttributes");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,7 +79,7 @@ export const DetailsToMarkdown = {
   // TODO well if you want :sweat_smile:
   unsafe: [],
   handlers: {
-    detailsContainer: () => "dddd",
-    detailsContainerSummary: () => "aaaa",
+    detailsContainer: () => "",
+    detailsContainerSummary: () => "",
   },
 };
