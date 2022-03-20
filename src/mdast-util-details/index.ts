@@ -59,7 +59,9 @@ export const DetailsFromMarkdown: Extension = {
       // this.setData("detailsAttributes");
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (this.stack[this.stack.length - 1] as any).attributes = cleaned;
+      const node = this.stack[this.stack.length - 1] as any;
+      node.attributes = cleaned;
+
       enter.call(this, "detailsContainerSummary", token, "summary");
     },
   },
