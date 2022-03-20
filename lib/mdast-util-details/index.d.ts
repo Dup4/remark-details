@@ -1,4 +1,4 @@
-import type { Extension } from 'mdast-util-from-markdown/lib';
+import type { Extension } from "mdast-util-from-markdown/lib";
 export declare const DetailsFromMarkdown: Extension;
 export declare const DetailsToMarkdown: {
     unsafe: never[];
