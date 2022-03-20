@@ -6,6 +6,8 @@ test_output/
 # Source maps
 *.map
 
+tmp.test.ts
+
 # Test result
 /tests/output
 

@@ -1,34 +1,34 @@
-import { markdownSpace } from 'micromark-util-character'
-import type { Effects, State } from 'micromark-util-types'
+import { markdownSpace } from "micromark-util-character";
+import type { Effects, State } from "micromark-util-types";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Code } from 'micromark-util-types'
+import { Code } from "micromark-util-types";
 
 export function factoryExactSpace(
   effects: Effects,
   ok: State,
   nok: State,
   type: string,
-  number: number,
+  number: number
 ): State {
-  let size = 0
+  let size = 0;
 
-  const prefix: State = function(code) {
+  const prefix: State = function (code) {
     if (size === number) {
-      effects.exit(type)
-      return ok(code)
+      effects.exit(type);
+      return ok(code);
     }
     if (markdownSpace(code) && ++size <= number) {
-      effects.consume(code)
-      return prefix
+      effects.consume(code);
+      return prefix;
     }
-    effects.exit(type)
-    return nok(code)
-  }
+    effects.exit(type);
+    return nok(code);
+  };
 
   return (code) => {
     if (markdownSpace(code)) {
-      effects.enter(type)
-      return prefix(code)
+      effects.enter(type);
+      return prefix(code);
     }
-  }
+  };
 }

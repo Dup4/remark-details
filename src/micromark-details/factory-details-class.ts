@@ -1,45 +1,44 @@
-import { markdownSpace } from 'micromark-util-character'
-import { codes } from 'micromark-util-symbol/codes.js'
-import type { State, Tokenizer } from 'micromark-util-types'
+import { markdownSpace } from "micromark-util-character";
+import { codes } from "micromark-util-symbol/codes.js";
+import type { State, Tokenizer } from "micromark-util-types";
 
-export const factoryDetailsClass: Tokenizer = function(effects, ok, nok) {
-  let detailsClass: 'note' | 'warning' | 'question'
-  let num = 0
+export const factoryDetailsClass: Tokenizer = function (effects, ok, nok) {
+  let detailsClass: "note" | "warning" | "question";
+  let num = 0;
 
-  const className: State = function(code) {
+  const className: State = function (code) {
     if (num === detailsClass.length) {
       if (markdownSpace(code)) {
-        effects.exit('detailsContainerClassName')
-        return ok(code)
-      }
-      else {
-        return nok(code)
+        effects.exit("detailsContainerClassName");
+        return ok(code);
+      } else {
+        return nok(code);
       }
     }
 
     if (detailsClass[num++] !== String.fromCharCode(code as number))
-      return nok(code)
+      return nok(code);
 
-    effects.consume(code)
-    return className
-  }
+    effects.consume(code);
+    return className;
+  };
 
   return (code) => {
     switch (code) {
       case codes.lowercaseN:
-        detailsClass = 'note'
-        break
+        detailsClass = "note";
+        break;
       case codes.lowercaseW:
-        detailsClass = 'warning'
-        break
+        detailsClass = "warning";
+        break;
       case codes.lowercaseQ:
-        detailsClass = 'question'
-        break
+        detailsClass = "question";
+        break;
       default:
-        return nok(code)
+        return nok(code);
     }
 
-    effects.enter('detailsContainerClassName')
-    return className
-  }
-}
+    effects.enter("detailsContainerClassName");
+    return className;
+  };
+};
