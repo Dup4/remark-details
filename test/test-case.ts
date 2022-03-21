@@ -105,7 +105,7 @@ const TestCase = <ITestCase>(
         input = markdown;
         expected = html;
       } else if (mode === TestMode.ToMarkdown) {
-        input = html;
+        input = markdown;
         expected = markdown;
       }
 
