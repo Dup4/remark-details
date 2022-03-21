@@ -18,7 +18,7 @@
         "build": "rimraf lib && tsc",
         "test": "npm run build && rimraf test_dist && rimraf test_output && mkdir test_output && cd test && tsc && ava",
         "lint": "eslint .",
-        "format": "eslint . --fix",
+        "lint:fix": "eslint . --fix",
         "release": "npm run build && zx scripts/release.mjs",
         "prepublishOnly": "npm run build"
     },
