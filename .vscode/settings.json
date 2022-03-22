@@ -7,6 +7,6 @@
         "rehype",
         "tldr",
         "unist",
-        "vfile"
-    ],
+        "vfile",
+    ]
 }

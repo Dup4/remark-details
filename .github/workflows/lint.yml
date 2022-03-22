@@ -26,7 +26,10 @@ jobs:
           cache: pnpm
 
       - name: Install
-        run: pnpm i
+        run: |
+          pnpm i
 
       - name: Lint
-        run: pnpm lint
+        run: |
+          pnpm lint
+          pnpm format

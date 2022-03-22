@@ -19,6 +19,8 @@
         "test": "npm run build && rimraf test_dist && rimraf test_output && mkdir test_output && cd test && tsc && ava",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
         "release": "npm run build && zx scripts/release.mjs",
         "prepublishOnly": "npm run build"
     },
@@ -59,6 +61,7 @@
         "eslint": "8.8.0",
         "fs-extra": "^10.0.1",
         "micromark": "^3.0.10",
+        "prettier": "^2.6.0",
         "rehype-stringify": "^9.0.3",
         "remark": "^14.0.2",
         "remark-cli": "^10.0.1",
