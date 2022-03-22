@@ -22,7 +22,8 @@
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "release": "npm run build && zx scripts/release.mjs",
-        "prepublishOnly": "npm run build"
+        "prepublishOnly": "npm run build",
+        "prepare": "husky install"
     },
     "husky": {
         "hooks": {
