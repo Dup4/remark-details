@@ -3,8 +3,6 @@
 /test_dist
 /test_output
 
-.husky
-
 # Source maps
 *.map
 
